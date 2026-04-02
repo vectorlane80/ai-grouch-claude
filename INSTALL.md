@@ -3,7 +3,8 @@
 To use this skill in Claude Code, copy `ai-grouch.md` to your Claude skills directory:
 
 ```sh
-cp ai-grouch.md ~/.claude/skills/ai-grouch.md
+mkdir -p ~/.claude/skills/ai-grouch
+cp ai-grouch.md ~/.claude/skills/ai-grouch/SKILL.md
 ```
 
 Then invoke it in any Claude Code session with:
