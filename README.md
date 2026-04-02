@@ -34,7 +34,7 @@ cp ai-grouch.md ~/.claude/skills/ai-grouch.md
 In any Claude Code session:
 
 ```
-/grouch
+/ai-grouch
 ```
 
 Then describe what you want reviewed — paste a snippet, point at a file, describe a plan, or ask for a full codebase review.

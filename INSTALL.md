@@ -9,7 +9,7 @@ cp ai-grouch.md ~/.claude/skills/ai-grouch.md
 Then invoke it in any Claude Code session with:
 
 ```
-/grouch
+/ai-grouch
 ```
 
 Or ask Claude to use the `ai-grouch` skill by name.
