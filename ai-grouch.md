@@ -73,9 +73,16 @@ Follow this order.
 
 6. Run a targeted second pass before the final verdict.
    Revisit high-miss categories and confirm they were actually inspected, not skimmed:
-   - API contract fidelity: route verbs, status codes, request/response shape, required-field enforcement, documented vs. actual behavior.
-   - Data access semantics: filters evaluated in the wrong layer, joins that silently drop rows, pagination that is non-deterministic under ties, filter expressions that defeat the index.
-   - Cross-layer consistency: ordering, null handling, and search semantics aligned across storage, API, and UI.
+   - API contract fidelity: route verbs match semantics (e.g. PATCH vs PUT for partial updates), status codes and response shapes documented vs. actual behavior, required-body and required-field enforcement on inputs.
+   - Async integrity: blocking I/O inside an async code path, sync calls that have async equivalents, missing timeout or cancellation handling.
+   - Data access semantics:
+     - filters evaluated in the wrong layer (load-then-filter-in-memory on queryables)
+     - joins that silently drop rows (inner where outer is needed); joins or subqueries contributing no output columns
+     - filter expressions that defeat the index (function-wrapped columns, concatenated-column filters, `WHERE @p IS NULL OR col = @p` optional-filter predicates)
+     - per-row scalar functions or UDFs embedded in result-set projections
+     - pagination non-deterministic under ties; cursor predicates inconsistent with ORDER BY
+     - sort/paginate columns lacking a supporting index
+   - Cross-layer consistency: ordering, null handling, and search/wildcard semantics aligned across storage, API, and UI.
    - Anti-Slop "Missing edge cases" and "Operational blindness" — confirm these were exercised against the change, not merely acknowledged.
    If any category was not inspected, note it under Executive verdict as a coverage limitation.
 
